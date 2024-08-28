@@ -99,3 +99,28 @@ app.put('/api/account/:fullName', (req, res) => {
 
     res.json({ message: 'Account updated successfully' });
 });
+
+// Gauti arba atnaujinti varda
+app.get('/api/account/:fullName/name', (req, res) => {
+    const fullName = req.params.fullName.toLowerCase();
+    const account = accounts[fullName];
+
+    if (!account) {
+        return res.status(404).json({ error: 'Account not found' });
+    }
+
+    res.json({ vardas: account.vardas });
+});
+
+app.put('/api/account/:fullName/name', (req, res) => {
+    const fullName = req.params.fullName.toLowerCase();
+    const { vardas } = req.body;
+    const account = accounts[fullName];
+
+    if (!account) {
+        return res.status(404).json({ error: 'Account not found' });
+    }
+
+    account.vardas = vardas;
+    res.json({ message: 'Name updated successfully' });
+});
