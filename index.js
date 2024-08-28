@@ -39,3 +39,19 @@ app.post('/api/account', (req, res) => {
 
     res.status(201).json({ message: 'Account created successfully' });
 });
+
+// Gauti sąskaitos informaciją
+app.get('/api/account/:fullName', (req, res) => {
+    const fullName = req.params.fullName.toLowerCase();
+    const account = accounts[fullName];
+
+    if (!account) {
+        return res.status(404).json({ error: 'Account not found' });
+    }
+
+    res.json({
+        vardas: account.vardas,
+        pavarde: account.pavarde,
+        gimimoData: account.gimimoData
+    });
+});
