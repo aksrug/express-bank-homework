@@ -72,3 +72,30 @@ app.delete('/api/account/:fullName', (req, res) => {
     delete accounts[fullName];
     res.json({ message: 'Account deleted successfully' });
 });
+
+// Atnaujinti sąskaitos informaciją
+app.put('/api/account/:fullName', (req, res) => {
+    const fullName = req.params.fullName.toLowerCase();
+    const { vardas, pavarde, gimimoData } = req.body;
+
+    if (!accounts[fullName]) {
+        return res.status(404).json({ error: 'Account not found' });
+    }
+
+    if (isAdult(gimimoData) < 18) {
+        return res.status(400).json({ error: 'Must be 18 years or older' });
+    }
+
+    const newFullName = `${vardas.toLowerCase()}-${pavarde.toLowerCase()}`;
+
+    if (newFullName !== fullName && accounts[newFullName]) {
+        return res.status(400).json({ error: 'New account name already exists' });
+    }
+
+    accounts[newFullName] = { ...accounts[fullName], vardas, pavarde, gimimoData };
+    if (newFullName !== fullName) {
+        delete accounts[fullName];
+    }
+
+    res.json({ message: 'Account updated successfully' });
+});
