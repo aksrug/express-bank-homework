@@ -55,3 +55,20 @@ app.get('/api/account/:fullName', (req, res) => {
         gimimoData: account.gimimoData
     });
 });
+
+// Ištrinti sąskaitą
+app.delete('/api/account/:fullName', (req, res) => {
+    const fullName = req.params.fullName.toLowerCase();
+    const account = accounts[fullName];
+
+    if (!account) {
+        return res.status(404).json({ error: 'Account not found' });
+    }
+
+    if (account.balance !== 0) {
+        return res.status(400).json({ error: 'Account must be empty to delete' });
+    }
+
+    delete accounts[fullName];
+    res.json({ message: 'Account deleted successfully' });
+});
