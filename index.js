@@ -16,3 +16,26 @@ function isAdult(dob) {
     }
     return age;
 }
+
+// Sukurti naują sąskaitą
+app.post('/api/account', (req, res) => {
+    const { vardas, pavarde, gimimoData } = req.body;
+    const fullName = `${vardas.toLowerCase()}-${pavarde.toLowerCase()}`;
+
+    if (accounts[fullName]) {
+        return res.status(400).json({ error: 'Account already exists' });
+    }
+
+    if (isAdult(gimimoData) < 18) {
+        return res.status(400).json({ error: 'Must be 18 years or older' });
+    }
+
+    accounts[fullName] = {
+        vardas,
+        pavarde,
+        gimimoData,
+        balance: 0
+    };
+
+    res.status(201).json({ message: 'Account created successfully' });
+});
