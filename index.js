@@ -124,7 +124,7 @@ app.put('/api/account/:fullName/name', (req, res) => {
     res.json({ message: 'First name updated successfully' });
 });
 
-// Gauti arba atnaujinti pavarde
+
 app.get('/api/account/:fullName/surname', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
     const account = accounts[fullName];
@@ -133,23 +133,23 @@ app.get('/api/account/:fullName/surname', (req, res) => {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    res.json({ pavarde: account.pavarde });
+    res.json({ lastName: account.lastName });
 });
 
 app.put('/api/account/:fullName/surname', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
-    const { pavarde } = req.body;
+    const { lastName } = req.body;
     const account = accounts[fullName];
 
     if (!account) {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    account.pavarde = pavarde;
+    account.lastName = lastName;
     res.json({ message: 'Surname updated successfully' });
 });
 
-// Gauti arba atnaujinti gimimo datą
+
 app.get('/api/account/:fullName/dob', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
     const account = accounts[fullName];
@@ -158,64 +158,64 @@ app.get('/api/account/:fullName/dob', (req, res) => {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    res.json({ gimimoData: account.gimimoData });
+    res.json({ dateOfBirth: account.dateOfBirth });
 });
 
 app.put('/api/account/:fullName/dob', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
-    const { gimimoData } = req.body;
+    const { dateOfBirth } = req.body;
     const account = accounts[fullName];
 
     if (!account) {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    if (isAdult(gimimoData) < 18) {
+    if (isAdult(dateOfBirth) < 18) {
         return res.status(400).json({ error: 'Must be 18 years or older' });
     }
 
-    account.gimimoData = gimimoData;
+    account.dateOfBirth = dateOfBirth;
     res.json({ message: 'Date of birth updated successfully' });
 });
 
-// Išsiimti pinigus
+
 app.post('/api/withdrawal', (req, res) => {
-    const { piniguKiekis, vardas, pavarde } = req.body;
-    const fullName = `${vardas.toLowerCase()}-${pavarde.toLowerCase()}`;
+    const { amount, firstName, lastName } = req.body;
+    const fullName = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
     const account = accounts[fullName];
 
     if (!account) {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    if (account.balance < piniguKiekis) {
+    if (account.balance < amount) {
         return res.status(400).json({ error: 'Insufficient funds' });
     }
 
-    account.balance -= piniguKiekis;
+    account.balance -= amount;
     res.json({ message: `Withdrawal successful. New balance: ${(account.balance / 100).toFixed(2)} EUR` });
 });
 
-// Įnešti pinigus
+
 app.post('/api/deposit', (req, res) => {
-    const { piniguKiekis, vardas, pavarde } = req.body;
-    const fullName = `${vardas.toLowerCase()}-${pavarde.toLowerCase()}`;
+    const { amount, firstName, lastName } = req.body;
+    const fullName = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
     const account = accounts[fullName];
 
     if (!account) {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    account.balance += piniguKiekis;
+    account.balance += amount;
     res.json({ message: `Deposit successful. New balance: ${(account.balance / 100).toFixed(2)} EUR` });
 });
 
-// Pervesti pinigus tarp sąskaitų
-app.post('/api/transfer', (req, res) => {
-    const { isVardas, isPavarde, iVardas, iPavarde, piniguKiekis } = req.body;
 
-    const fromFullName = `${isVardas.toLowerCase()}-${isPavarde.toLowerCase()}`;
-    const toFullName = `${iVardas.toLowerCase()}-${iPavarde.toLowerCase()}`;
+app.post('/api/transfer', (req, res) => {
+    const { fromFirstName, fromLastName, toFirstName, toLastName, amount } = req.body;
+
+    const fromFullName = `${fromFirstName.toLowerCase()}-${fromLastName.toLowerCase()}`;
+    const toFullName = `${toFirstName.toLowerCase()}-${toLastName.toLowerCase()}`;
 
     const fromAccount = accounts[fromFullName];
     const toAccount = accounts[toFullName];
@@ -224,17 +224,17 @@ app.post('/api/transfer', (req, res) => {
         return res.status(404).json({ error: 'One or both accounts not found' });
     }
 
-    if (fromAccount.balance < piniguKiekis) {
+    if (fromAccount.balance < amount) {
         return res.status(400).json({ error: 'Insufficient funds' });
     }
 
-    fromAccount.balance -= piniguKiekis;
-    toAccount.balance += piniguKiekis;
+    fromAccount.balance -= amount;
+    toAccount.balance += amount;
 
     res.json({ message: `Transfer successful. New balance: ${(fromAccount.balance / 100).toFixed(2)} EUR (from), ${(toAccount.balance / 100).toFixed(2)} EUR (to)` });
 });
 
-// Paleisti serverį
+
 const port = 3100;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
