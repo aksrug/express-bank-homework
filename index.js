@@ -196,3 +196,17 @@ app.post('/api/withdrawal', (req, res) => {
     account.balance -= piniguKiekis;
     res.json({ message: `Withdrawal successful. New balance: ${(account.balance / 100).toFixed(2)} EUR` });
 });
+
+// Įnešti pinigus
+app.post('/api/deposit', (req, res) => {
+    const { piniguKiekis, vardas, pavarde } = req.body;
+    const fullName = `${vardas.toLowerCase()}-${pavarde.toLowerCase()}`;
+    const account = accounts[fullName];
+
+    if (!account) {
+        return res.status(404).json({ error: 'Account not found' });
+    }
+
+    account.balance += piniguKiekis;
+    res.json({ message: `Deposit successful. New balance: ${(account.balance / 100).toFixed(2)} EUR` });
+});
