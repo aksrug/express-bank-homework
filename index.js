@@ -149,3 +149,32 @@ app.put('/api/account/:fullName/surname', (req, res) => {
     account.pavarde = pavarde;
     res.json({ message: 'Surname updated successfully' });
 });
+
+// Gauti arba atnaujinti gimimo datą
+app.get('/api/account/:fullName/dob', (req, res) => {
+    const fullName = req.params.fullName.toLowerCase();
+    const account = accounts[fullName];
+
+    if (!account) {
+        return res.status(404).json({ error: 'Account not found' });
+    }
+
+    res.json({ gimimoData: account.gimimoData });
+});
+
+app.put('/api/account/:fullName/dob', (req, res) => {
+    const fullName = req.params.fullName.toLowerCase();
+    const { gimimoData } = req.body;
+    const account = accounts[fullName];
+
+    if (!account) {
+        return res.status(404).json({ error: 'Account not found' });
+    }
+
+    if (isAdult(gimimoData) < 18) {
+        return res.status(400).json({ error: 'Must be 18 years or older' });
+    }
+
+    account.gimimoData = gimimoData;
+    res.json({ message: 'Date of birth updated successfully' });
+});
