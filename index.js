@@ -3,9 +3,8 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-let accounts = {}; // Čia saugosime visas sąskaitas
+let accounts = {}; 
 
-// Pagalbinė funkcija tikrinti amžių
 function isAdult(dob) {
     const birthDate = new Date(dob);
     const today = new Date();
@@ -17,30 +16,30 @@ function isAdult(dob) {
     return age;
 }
 
-// Sukurti naują sąskaitą
+
 app.post('/api/account', (req, res) => {
-    const { vardas, pavarde, gimimoData } = req.body;
-    const fullName = `${vardas.toLowerCase()}-${pavarde.toLowerCase()}`;
+    const { firstName, lastName, dateOfBirth } = req.body;
+    const fullName = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
 
     if (accounts[fullName]) {
         return res.status(400).json({ error: 'Account already exists' });
     }
 
-    if (isAdult(gimimoData) < 18) {
+    if (isAdult(dateOfBirth) < 18) {
         return res.status(400).json({ error: 'Must be 18 years or older' });
     }
 
     accounts[fullName] = {
-        vardas,
-        pavarde,
-        gimimoData,
+        firstName,
+        lastName,
+        dateOfBirth,
         balance: 0
     };
 
     res.status(201).json({ message: 'Account created successfully' });
 });
 
-// Gauti sąskaitos informaciją
+
 app.get('/api/account/:fullName', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
     const account = accounts[fullName];
@@ -50,9 +49,9 @@ app.get('/api/account/:fullName', (req, res) => {
     }
 
     res.json({
-        vardas: account.vardas,
-        pavarde: account.pavarde,
-        gimimoData: account.gimimoData
+        firstName: account.firstName,
+        lastName: account.lastName,
+        dateOfBirth: account.dateOfBirth
     });
 });
 
@@ -73,26 +72,26 @@ app.delete('/api/account/:fullName', (req, res) => {
     res.json({ message: 'Account deleted successfully' });
 });
 
-// Atnaujinti sąskaitos informaciją
+
 app.put('/api/account/:fullName', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
-    const { vardas, pavarde, gimimoData } = req.body;
+    const { firstName, lastName, dateOfBirth } = req.body;
 
     if (!accounts[fullName]) {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    if (isAdult(gimimoData) < 18) {
+    if (isAdult(dateOfBirth) < 18) {
         return res.status(400).json({ error: 'Must be 18 years or older' });
     }
 
-    const newFullName = `${vardas.toLowerCase()}-${pavarde.toLowerCase()}`;
+    const newFullName = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
 
     if (newFullName !== fullName && accounts[newFullName]) {
         return res.status(400).json({ error: 'New account name already exists' });
     }
 
-    accounts[newFullName] = { ...accounts[fullName], vardas, pavarde, gimimoData };
+    accounts[newFullName] = { ...accounts[fullName], firstName, lastName, dateOfBirth };
     if (newFullName !== fullName) {
         delete accounts[fullName];
     }
@@ -100,7 +99,7 @@ app.put('/api/account/:fullName', (req, res) => {
     res.json({ message: 'Account updated successfully' });
 });
 
-// Gauti arba atnaujinti varda
+
 app.get('/api/account/:fullName/name', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
     const account = accounts[fullName];
@@ -109,20 +108,20 @@ app.get('/api/account/:fullName/name', (req, res) => {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    res.json({ vardas: account.vardas });
+    res.json({ firstName: account.firstName });
 });
 
 app.put('/api/account/:fullName/name', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
-    const { vardas } = req.body;
+    const { firstName } = req.body;
     const account = accounts[fullName];
 
     if (!account) {
         return res.status(404).json({ error: 'Account not found' });
     }
 
-    account.vardas = vardas;
-    res.json({ message: 'Name updated successfully' });
+    account.firstName = firstName;
+    res.json({ message: 'First name updated successfully' });
 });
 
 // Gauti arba atnaujinti pavarde
@@ -233,4 +232,10 @@ app.post('/api/transfer', (req, res) => {
     toAccount.balance += piniguKiekis;
 
     res.json({ message: `Transfer successful. New balance: ${(fromAccount.balance / 100).toFixed(2)} EUR (from), ${(toAccount.balance / 100).toFixed(2)} EUR (to)` });
+});
+
+// Paleisti serverį
+const port = 3100;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
