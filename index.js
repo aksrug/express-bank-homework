@@ -210,3 +210,27 @@ app.post('/api/deposit', (req, res) => {
     account.balance += piniguKiekis;
     res.json({ message: `Deposit successful. New balance: ${(account.balance / 100).toFixed(2)} EUR` });
 });
+
+// Pervesti pinigus tarp sąskaitų
+app.post('/api/transfer', (req, res) => {
+    const { isVardas, isPavarde, iVardas, iPavarde, piniguKiekis } = req.body;
+
+    const fromFullName = `${isVardas.toLowerCase()}-${isPavarde.toLowerCase()}`;
+    const toFullName = `${iVardas.toLowerCase()}-${iPavarde.toLowerCase()}`;
+
+    const fromAccount = accounts[fromFullName];
+    const toAccount = accounts[toFullName];
+
+    if (!fromAccount || !toAccount) {
+        return res.status(404).json({ error: 'One or both accounts not found' });
+    }
+
+    if (fromAccount.balance < piniguKiekis) {
+        return res.status(400).json({ error: 'Insufficient funds' });
+    }
+
+    fromAccount.balance -= piniguKiekis;
+    toAccount.balance += piniguKiekis;
+
+    res.json({ message: `Transfer successful. New balance: ${(fromAccount.balance / 100).toFixed(2)} EUR (from), ${(toAccount.balance / 100).toFixed(2)} EUR (to)` });
+});
