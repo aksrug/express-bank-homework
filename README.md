@@ -112,7 +112,7 @@ fullName: The full name of the account holder (e.g., john-doe).
 }
 
 Get or Update First Name
-(#-apache) Get First Name:
+**Get First Name:**
 - Endpoint: /api/account/:fullName/name
 - Method: GET
 - Description: Retrieves the first name of the account holder.
@@ -120,7 +120,7 @@ Get or Update First Name
 {
   "firstName": "John"
 }
-(#-apache) Update First Name:
+**Update First Name:**
 - Endpoint: /api/account/:fullName/name
 - Method: PUT
 - Description: Updates the first name of the account holder.
@@ -134,7 +134,7 @@ Get or Update First Name
 }
 
 Get or Update Last Name
-(#-apache) Get Last Name:
+**Get Last Name:**
 - Endpoint: /api/account/:fullName/surname
 - Method: GET
 - Description: Retrieves the last name of the account holder.
@@ -142,8 +142,7 @@ Get or Update Last Name
 {
   "lastName": "Doe"
 }
-
-(#-apache) Update Last Name
+**Update Last Name:**
 - Endpoint: /api/account/:fullName/surname
 - Method: PUT
 - Description: Updates the last name of the account holder.
@@ -156,6 +155,80 @@ Get or Update Last Name
   "message": "Last name updated successfully"
 }
 
+Get or Update Date of Birth
+**Get Date of Birth:**
+
+- Endpoint: /api/account/:fullName/dob
+- Method: GET
+- Description: Retrieves the date of birth of the account holder.
+- Response:
+{
+  "dateOfBirth": "1980-01-01"
+}
+
+**Update Date of Birth:**
+
+- Endpoint: /api/account/:fullName/dob
+- Method: PUT
+- Description: Updates the date of birth of the account holder.
+- Request Body:
+{
+  "dateOfBirth": "1981-02-02"
+}
+- Response: 
+{
+  "message": "Date of birth updated successfully"
+}
+
+Withdraw Money
+- Endpoint: /api/withdrawal
+- Method: POST
+- Description: Withdraws money from the specified account.
+- Request Body:
+{
+  "amount": 1000,
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+- Response:
+{
+  "message": "Withdrawal successful. New balance: 123.45 EUR"
+}
+
+Deposit Money
+- Endpoint: /api/deposit
+- Method: POST
+- Description: Deposits money into the specified account.
+- Request Body:
+{
+  "amount": 2000,
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+- Response:
+{
+  "message": "Deposit successful. New balance: 123.45 EUR"
+}
+
+Transfer Money Between Accounts
+- Endpoint: /api/transfer
+- Method: POST
+- Description: Transfers money from one account to another.
+- Request Body:
+{
+  "fromFirstName": "John",
+  "fromLastName": "Doe",
+  "toFirstName": "Jane",
+  "toLastName": "Doe",
+  "amount": 500
+}
+
+- Response:
+{
+  "message": "Transfer successful. New balance: 123.45 EUR (from), 678.90 EUR (to)"
+}
 
 
 
