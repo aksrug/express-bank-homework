@@ -1,9 +1,25 @@
+//import { accounts } from './data/accounts.js'; 
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-let accounts = {}; 
+//let accounts = {}; 
+
+const accounts = [
+    {
+      firstName: "John",
+      lastName: "Doe",
+      dateOfBirth: "1980-01-01",
+      amount: 2000,
+    },
+    {
+      firstName: "Jane",
+      lastName: "Doe",
+      dateOfBirth: "1980-01-01",
+      amount: 500,
+    },
+  ];
 
 function isAdult(dob) {
     const birthDate = new Date(dob);
@@ -55,7 +71,7 @@ app.get('/api/account/:fullName', (req, res) => {
     });
 });
 
-// Ištrinti sąskaitą
+
 app.delete('/api/account/:fullName', (req, res) => {
     const fullName = req.params.fullName.toLowerCase();
     const account = accounts[fullName];
@@ -237,5 +253,5 @@ app.post('/api/transfer', (req, res) => {
 
 const port = 3100;
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port: http:localhost:${port}`);
 });
