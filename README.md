@@ -17,13 +17,57 @@ This is a simple RESTful API for managing bank accounts. The API allows users to
 
 ## 🧰 Getting Started
 
-### Prerequisites
+### 💻 Prerequisites
 
-- [Node.js](https://nodejs.org/) (version 14 or higher)
-- [npm](https://www.npmjs.com/)
+Node.js - _download and install_
 
-### Installation
+```
+https://nodejs.org
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/aksrug/express-bank-homework
+Git - _download and install_
+
+```
+https://git-scm.com
+```
+
+Insomnia (or other equivalents) - _download and install_
+
+```
+https://insomnia.rest/download
+```
+### 🏃 Run locally
+
+Would like to run this project locally? Open terminal and follow these steps:
+
+1. Clone the repo to your selected folder
+    ```sh
+    git clone https://github.com/aksrug/express-bank-homework .
+    ```
+2. Install NPM packages
+    ```sh
+    npm i
+    ```
+3. Run the server
+    ```sh
+    npm run dev
+    ```
+This will start the API server on http://localhost:3100.
+
+## API Endpoints
+
+
+## 👀 Authors
+
+Rugile: [Github](https://github.com/aksrug)
+
+## ⚠️ License
+
+Distributed under the MIT License. See LICENSE.txt for more information.
+
+## 🔗 Other resources
+
+No other resources.
+
+
+   
