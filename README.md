@@ -70,6 +70,19 @@ Create Account
   "message": "Account created successfully"
 }
 
+Get Account Information
+- Endpoint: /api/account/:fullName
+- Method: GET
+- Description: Retrieves the details of an account.
+- URL Parameters:
+fullName: The full name of the account holder (e.g., john-doe).
+- Response:
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "dateOfBirth": "1980-01-01"
+}
+
 
 
 ## 👀 Authors
