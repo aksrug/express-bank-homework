@@ -111,6 +111,29 @@ fullName: The full name of the account holder (e.g., john-doe).
   "message": "Account updated successfully"
 }
 
+Get or Update First Name
+- Get First Name:
+- Endpoint: /api/account/:fullName/name
+- Method: GET
+- Description: Retrieves the first name of the account holder.
+- Response:
+{
+  "firstName": "John"
+}
+- Update First Name:
+- Endpoint: /api/account/:fullName/name
+- Method: PUT
+- Description: Updates the first name of the account holder.
+- Request Body:
+{
+  "firstName": "Jonathan"
+}
+- Response:
+{
+  "message": "First name updated successfully"
+}
+
+
 
 
 ## 👀 Authors
