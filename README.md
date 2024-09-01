@@ -112,7 +112,7 @@ fullName: The full name of the account holder (e.g., john-doe).
 }
 
 Get or Update First Name
-[Apache] Get First Name:
+(#-apache) Get First Name:
 - Endpoint: /api/account/:fullName/name
 - Method: GET
 - Description: Retrieves the first name of the account holder.
@@ -120,7 +120,7 @@ Get or Update First Name
 {
   "firstName": "John"
 }
-[Apache] Update First Name:
+(#-apache) Update First Name:
 - Endpoint: /api/account/:fullName/name
 - Method: PUT
 - Description: Updates the first name of the account holder.
@@ -134,7 +134,7 @@ Get or Update First Name
 }
 
 Get or Update Last Name
-[Apache] Get Last Name:
+(#-apache) Get Last Name:
 - Endpoint: /api/account/:fullName/surname
 - Method: GET
 - Description: Retrieves the last name of the account holder.
@@ -143,7 +143,7 @@ Get or Update Last Name
   "lastName": "Doe"
 }
 
-[Apache] Update Last Name
+(#-apache) Update Last Name
 - Endpoint: /api/account/:fullName/surname
 - Method: PUT
 - Description: Updates the last name of the account holder.
