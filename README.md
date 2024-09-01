@@ -83,6 +83,34 @@ fullName: The full name of the account holder (e.g., john-doe).
   "dateOfBirth": "1980-01-01"
 }
 
+Delete Account
+- Endpoint: /api/account/:fullName
+- Method: DELETE
+- Description: Deletes an account if the balance is zero.
+- URL Parameters:
+fullName: The full name of the account holder (e.g., john-doe).
+- Response:
+{
+  "message": "Account deleted successfully"
+}
+
+Update Account Information
+- Endpoint: /api/account/:fullName
+- Method: PUT
+- Description: Updates the account details (first name, last name, and date of birth).
+- URL Parameters:
+fullName: The full name of the account holder (e.g., john-doe).
+- Request Body:
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "dateOfBirth": "1980-01-01"
+}
+- Response:
+{
+  "message": "Account updated successfully"
+}
+
 
 
 ## 👀 Authors
