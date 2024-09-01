@@ -55,6 +55,21 @@ Would like to run this project locally? Open terminal and follow these steps:
 This will start the API server on http://localhost:3100.
 
 ## API Endpoints
+Create Account
+- Endpoint: /api/account
+- Method: POST
+- Description: Creates a new bank account.
+- Request Body:
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "dateOfBirth": "1980-01-01"
+}
+- Response:
+{
+  "message": "Account created successfully"
+}
+
 
 
 ## 👀 Authors
