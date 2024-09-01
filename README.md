@@ -112,7 +112,7 @@ fullName: The full name of the account holder (e.g., john-doe).
 }
 
 Get or Update First Name
-**Get First Name:**
+- **Get First Name:**
 - Endpoint: /api/account/:fullName/name
 - Method: GET
 - Description: Retrieves the first name of the account holder.
@@ -120,7 +120,8 @@ Get or Update First Name
 {
   "firstName": "John"
 }
-**Update First Name:**
+
+- **Update First Name:**
 - Endpoint: /api/account/:fullName/name
 - Method: PUT
 - Description: Updates the first name of the account holder.
@@ -134,7 +135,7 @@ Get or Update First Name
 }
 
 Get or Update Last Name
-**Get Last Name:**
+- **Get Last Name:**
 - Endpoint: /api/account/:fullName/surname
 - Method: GET
 - Description: Retrieves the last name of the account holder.
@@ -142,7 +143,7 @@ Get or Update Last Name
 {
   "lastName": "Doe"
 }
-**Update Last Name:**
+- **Update Last Name:**
 - Endpoint: /api/account/:fullName/surname
 - Method: PUT
 - Description: Updates the last name of the account holder.
@@ -156,8 +157,7 @@ Get or Update Last Name
 }
 
 Get or Update Date of Birth
-**Get Date of Birth:**
-
+- **Get Date of Birth:**
 - Endpoint: /api/account/:fullName/dob
 - Method: GET
 - Description: Retrieves the date of birth of the account holder.
@@ -166,8 +166,7 @@ Get or Update Date of Birth
   "dateOfBirth": "1980-01-01"
 }
 
-**Update Date of Birth:**
-
+- **Update Date of Birth:**
 - Endpoint: /api/account/:fullName/dob
 - Method: PUT
 - Description: Updates the date of birth of the account holder.
